@@ -29,7 +29,7 @@
 | /contests/[contest_id]/problems/[problem_id] | PUT | update a problem |
 | /contests/[contest_id]/problems/ | DELETE | delete all problems in a contest |
 | /contests/[contest_id]/problems/[problem_id] | DELETE | delete a problem in a contest |
-| 
+| | | | | |
 | /users/ | POST | create user |
 | /users/[id] | PUT | update user |
 | /users/[id] | DELETE | delete user |

@@ -36,3 +36,12 @@
 | /users/[id]/roles | POST | recieve role id and add it into the user |
 | /users/[id]/roles | delete | delete all roles of a user |
 | /users/[user_id]/roles/[role_id] | delete | delete a role of a user |
+
+## Commit規約
+Conventional commit
+
+## Issue規約
+[Front | Back] :type label: subject
+
+## Branch規約
+branch名はdefaultのものを使う

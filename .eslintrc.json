@@ -1,6 +1,12 @@
 {
   "extends": "next/core-web-vitals",
   "rules": {
-    "react/self-closing-comp": "error"
+    "react/self-closing-comp": "error",
+    "react/function-component-definition": [
+      "error",
+      {
+        "namedComponents": "arrow-function"
+      }
+    ]
   }
 }

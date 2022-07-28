@@ -44,4 +44,24 @@ Conventional commit
 [Front | Back] :type label: subject
 
 ## Branch規約
-branch名はdefaultのものを使う
+branch名はdefaultのものを使う
+
+## コーディング規約
+変数名は、camelCase（単語の先頭を大文字）
+クラス、型は、PascalCase
+定数は、すべて大文字のSNAKE_CASE
+未使用の変数名には先頭にアンダーバーをつける
+
+## コーディング規約
+変数名は、camelCase（単語の先頭を大文字）
+クラス、型は、PascalCase
+定数は、すべて大文字のSNAKE_CASE
+未使用の変数名には先頭にアンダーバーをつける
+
+| 種類 | ケース |
+| ---- | -------- | 
+| 変数 | camelCase |
+| クラス, 型 | PascalCase | 
+| 定数 | SNAKE_CASE |
+
+### ESLint

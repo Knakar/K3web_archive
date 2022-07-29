@@ -7,7 +7,7 @@ type Props = {
 
 export const CreateContestButton: FC<Props> = ({ onClick }) => (
   <Button
-    className="w-48 h-12 text-xl text-center bg-blue-500 text-white rounded"
+    className="w-44 h-12 text-xl text-center bg-blue-500 text-white rounded"
     onClick={onClick}
   >
     コンテストを作成

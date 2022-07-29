@@ -1,0 +1,83 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+model User {
+    id  Int @id @default(autoincrement())
+    discordId String  @unique
+    atcoderId String @unique
+    token String
+    isActive Boolean
+
+    roles RolesOnUsers[]
+    joinedContests UsersOnContests[]
+    createdContests Contest[]
+}
+
+model Role {
+    id Int @id @default(autoincrement())
+    permission Int
+    isActive Boolean
+
+    users RolesOnUsers[]
+    contests RolesOnContests[]
+}
+
+model RolesOnUsers {
+    user User @relation(fields: [userId], references: [id])
+    userId Int
+    role Role @relation(fields: [roleId], references: [id])
+    roleId Int
+
+    @@id([userId, roleId])
+}
+
+model Contest {
+    id Int @id @default(autoincrement())
+
+    startingTime DateTime
+    endingTime DateTime
+    penalty Int
+
+    contestants UsersOnContests[]
+    roles RolesOnContests[]
+
+    problems Problem[]
+
+    author User @relation(fields: [authorId], references: [id])
+    authorId Int
+}
+
+model UsersOnContests {
+    user User @relation(fields: [userId], references: [id])
+    userId Int
+    contest Contest @relation(fields: [contestId], references: [id])
+    contestId Int
+
+    @@id([userId, contestId])
+}
+model RolesOnContests {
+    role Role @relation(fields: [roleId], references: [id])
+    roleId Int
+    contest Contest @relation(fields: [contestId], references: [id])
+    contestId Int
+
+    @@id([roleId, contestId])
+}
+
+model Problem {
+    id Int @id @default(autoincrement())
+    atcoderId String
+    history Json
+
+    contest Contest @relation(fields: [contestId], references: [id])
+    contestId Int
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}

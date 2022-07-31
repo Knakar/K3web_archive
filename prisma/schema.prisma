@@ -5,8 +5,10 @@ model User {
     id  Int @id @default(autoincrement())
     discordId String  @unique
     atcoderId String @unique
-    token String
-    isActive Boolean
+    key String
+    expiration DateTime
+    isActive Boolean @default(true)
+    lastLogin DateTime
 
     roles RolesOnUsers[]
     joinedContests UsersOnContests[]

@@ -1,6 +1,7 @@
 import {randomBytes, createHash} from 'crypto'
 import {PrismaClient} from 'prisma/prisma-client/scripts/default-index';
-import { NextApiRequest} from 'next';
+import { NextApiRequest, NextApiResponse} from 'next';
+import NextCors from 'nextjs-cors';
 
 const prisma = new PrismaClient();
 type KeyPair  = {
@@ -21,8 +22,13 @@ function certificateKeys(pubKey: string, pbKey: string): boolean {
   return hashedKey === pbKey;
 }
 
-export async function authenticateRequest(request: NextApiRequest): Promise<boolean> {
-  //Todo: cors certification
+export async function authenticateRequest(request: NextApiRequest, response: NextApiResponse, acceptedMethod: string[]): Promise<boolean> {
+  await NextCors(request, response, {
+    methods: acceptedMethod,
+    origin: '*',
+    optionSuccessStatus: 200,
+  });
+
   const token: string | undefined = request.cookies.token;
   const userId : string | undefined = request.cookies.id;
   if(!token&&userId) return false;

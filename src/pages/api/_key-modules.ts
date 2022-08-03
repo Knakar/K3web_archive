@@ -12,3 +12,9 @@ export function generateKeys(): KeyPair {
     private: privateKey
   };
 }
+
+function certificateKeys(pubKey: string, pbKey: string): boolean {
+  const hashedKey  = createHash('RSA-512').update(pubKey, 'utf-8').digest('hex');
+  return hashedKey === pbKey;
+}
+

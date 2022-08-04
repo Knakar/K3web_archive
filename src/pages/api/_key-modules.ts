@@ -5,13 +5,15 @@ import NextCors from 'nextjs-cors';
 
 const prisma = new PrismaClient();
 type KeyPair = {
-  public: string,
-  private: string
-}
+  public: string;
+  private: string;
+};
 
 export function generateKeys(): KeyPair {
   const publicKey = randomBytes(1024).toString('hex');
-  const privateKey = createHash('RSA-512').update(publicKey, 'utf-8').digest('hex');
+  const privateKey = createHash('RSA-512')
+    .update(publicKey, 'utf-8')
+    .digest('hex');
   return {
     public: publicKey,
     private: privateKey,
@@ -23,7 +25,12 @@ function certificateKeys(pubKey: string, pbKey: string): boolean {
   return hashedKey === pbKey;
 }
 
-export async function authenticateRequest(request: NextApiRequest, response: NextApiResponse, acceptedMethod: string[]): Promise<boolean> {
+export async function authenticateRequest(
+  request: NextApiRequest,
+  response: NextApiResponse,
+  acceptedMethod: string[],
+): Promise<boolean> {
+  // cors
   await NextCors(request, response, {
     methods: acceptedMethod,
     origin: '*',
@@ -38,5 +45,11 @@ export async function authenticateRequest(request: NextApiRequest, response: Nex
       id: userId,
     },
   });
+  if (user) return false;
+  //check expiration
+  const expiration = new Date(user.expiration);
+  const now = new Date();
+  if (expiration < now) return false;
+
   return certificateKeys(token as string, user.key as string);
 }
